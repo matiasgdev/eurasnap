@@ -7,15 +7,16 @@ export function EmptyState() {
   const {navigate} = useNavigation();
 
   return (
-    <YStack flex={1} alignItems="center">
+    <YStack flex={1} alignItems="center" justifyContent="center">
       <Paragraph color={darkColors.gray1} fontSize={20}>
-        No pictures yet
+        No pictures yet :(
       </Paragraph>
       <Button
+        marginTop={12}
         onPress={() => {
           navigate('TakePicture');
         }}>
-        Take your first moment!
+        Capture your first moment!
       </Button>
     </YStack>
   );

@@ -10,7 +10,7 @@ import {InputSearch} from '../components/InputSearch';
 import {Error} from '../components/Error';
 
 export const HomeScreen = () => {
-  const {query, setQuery, savePicture} = useStore();
+  const {query, setQuery} = useStore();
 
   return (
     <SafeAreaView style={{flex: 1}}>

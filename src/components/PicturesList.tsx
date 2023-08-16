@@ -59,8 +59,7 @@ function PictureCard(photo: PhotoRecord) {
         sharedTransitionTag={`card-${id}`}>
         <Image
           flexGrow={1}
-          marginVertical={12}
-          height={180}
+          height={200}
           width={180}
           resizeMode="contain"
           source={{uri}}
@@ -72,9 +71,12 @@ function PictureCard(photo: PhotoRecord) {
           paddingHorizontal={8}
           paddingVertical={2}
           borderRadius={12}
+          maxWidth={140}
           alignItems="center"
-          backgroundColor={lightColors.orange8}>
-          <Paragraph fontSize={12}>{location}</Paragraph>
+          backgroundColor={lightColors.gray12}>
+          <Paragraph fontSize={12} numberOfLines={1}>
+            {location}
+          </Paragraph>
         </XStack>
       </Animated.View>
     </XStack>
@@ -88,6 +90,8 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   card: {
+    position: 'relative',
+    overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
     margin: 8,
@@ -96,7 +100,6 @@ const styles = StyleSheet.create({
     borderColor: '#e0e0e0',
     backgroundColor: '#f5f5f5',
     borderRadius: 8,
-    position: 'relative',
     shadowColor: '#7b7b7b',
     shadowOffset: {width: 6, height: 6},
     shadowOpacity: 0.3,

@@ -55,9 +55,9 @@ export function useAsync<T = any>(initialState: T, opts: Options<T> = {}) {
       setState({status: 'pending'});
 
       return promise.then(
-        (data: T) => {
+        async (data: T) => {
+          await opts.onSuccess?.(data);
           setData(data);
-          opts.onSuccess?.(data);
           return data;
         },
         (error: Error) => {
