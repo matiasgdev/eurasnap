@@ -1,4 +1,5 @@
 import React, {SafeAreaView, StatusBar} from 'react-native';
+
 import {XStack} from 'tamagui';
 
 import {useStore} from '../store/PhotoStore';
@@ -9,8 +10,12 @@ import {TakePictureButton} from '../components/TakePictureButton';
 import {InputSearch} from '../components/InputSearch';
 import {Error} from '../components/Error';
 
+import {useSplashScreen} from '../hooks/useSplashScreen';
+
 export const HomeScreen = () => {
   const {query, setQuery} = useStore();
+
+  useSplashScreen();
 
   return (
     <SafeAreaView style={{flex: 1}}>
