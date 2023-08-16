@@ -14,5 +14,4 @@ export interface PhotoStoreState {
   status: State['status'];
   setQuery: Dispatch<SetStateAction<string>>;
   query: string;
-  debouncedQuery: string;
 }

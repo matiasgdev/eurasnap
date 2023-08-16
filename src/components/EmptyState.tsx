@@ -2,9 +2,13 @@ import {useNavigation} from '@react-navigation/native';
 import {darkColors} from '@tamagui/themes';
 import React from 'react';
 import {Paragraph, YStack, Button} from 'tamagui';
+import {useStore} from '../store/PhotoStore';
 
 export function EmptyState() {
+  const {query} = useStore();
   const {navigate} = useNavigation();
+
+  if (query) return null;
 
   return (
     <YStack flex={1} alignItems="center" justifyContent="center">

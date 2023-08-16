@@ -4,12 +4,13 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
 import {STORAGE_PHOTOS_KEY} from '../const/key-storage';
 import {useAsync} from '../hooks/useAsync';
-import {useDebouncedValue} from '../hooks/useDebouncedValue';
 import {useStorage} from '../hooks/useStorage';
+import {filterByLocation} from '../lib/filterByLocation';
 import {PhotoRecord, PhotoStoreState} from './type';
 
 const PhotoStore = createContext<PhotoStoreState | null>(null);
@@ -28,7 +29,6 @@ export const PhotoProvider: React.FC<PropsWithChildren> = ({children}) => {
   );
 
   const [globalQuery, setGlobalQuery] = useState('');
-  const debouncedQuery = useDebouncedValue(globalQuery, 500);
 
   useEffect(() => {
     // retrieve photos from storage
@@ -43,16 +43,20 @@ export const PhotoProvider: React.FC<PropsWithChildren> = ({children}) => {
     [pictures],
   );
 
+  const filteredPictures = useMemo(
+    () => filterByLocation(pictures, globalQuery),
+    [pictures, globalQuery],
+  );
+
   return (
     <PhotoStore.Provider
       value={{
         error,
         status,
-        pictures,
+        pictures: filteredPictures,
         savePicture,
         setQuery: setGlobalQuery,
         query: globalQuery,
-        debouncedQuery,
       }}>
       {children}
     </PhotoStore.Provider>
