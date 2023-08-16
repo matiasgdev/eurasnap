@@ -1,7 +1,7 @@
 import {darkColors} from '@tamagui/themes';
 import React from 'react';
 import {Paragraph, YStack} from 'tamagui';
-import {FallbackProps} from '../ErrorBoundary';
+import {FallbackProps} from './ErrorBoundary';
 
 export function Error(props: FallbackProps) {
   return (
