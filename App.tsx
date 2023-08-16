@@ -6,6 +6,7 @@ import {TamaguiProvider} from 'tamagui';
 
 import {PhotoProvider} from './src/store/PhotoStore';
 import {HomeScreen} from './src/screens/HomeScreen';
+import {TakePictureScreen} from './src/screens/TakePictureScreen';
 
 import tamaguiCfg from './tamagui.config';
 import 'react-native-gesture-handler';
@@ -23,6 +24,11 @@ function App(): JSX.Element {
                 options={{headerShown: false}}
                 name="Home"
                 component={HomeScreen}
+              />
+              <Stack.Screen
+                options={{headerTitle: 'Take your moment'}}
+                name="TakePicture"
+                component={TakePictureScreen}
               />
             </Stack.Navigator>
           </PhotoProvider>

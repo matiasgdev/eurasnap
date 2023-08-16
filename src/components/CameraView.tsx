@@ -1,16 +1,13 @@
 import {useEffect, useRef} from 'react';
-import {
-  SafeAreaView,
-  View,
-  TouchableOpacity,
-  Text,
-  Platform,
-  ActivityIndicator,
-} from 'react-native';
+import {View, Platform, ActivityIndicator} from 'react-native';
 import {Camera, PhotoFile, useCameraDevices} from 'react-native-vision-camera';
 import storage from '@react-native-firebase/storage';
 
-export const CameraView = () => {
+interface CameraViewProps {
+  renderButton: (props: {takePicture: () => void}) => JSX.Element;
+}
+
+export const CameraView: React.FC<CameraViewProps> = ({renderButton}) => {
   const devices = useCameraDevices();
   const device = devices.back;
   const camera = useRef<Camera>(null);
@@ -32,7 +29,7 @@ export const CameraView = () => {
             skipMetadata: true,
           });
         } else {
-          photo = await camera.current?.takePhoto({
+          photo = await camera.current.takePhoto({
             qualityPrioritization: 'balanced',
             skipMetadata: true,
           });
@@ -49,29 +46,15 @@ export const CameraView = () => {
   if (typeof device === 'undefined') return <ActivityIndicator />;
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{flex: 1}}>
-        <Camera
-          ref={camera}
-          style={{flex: 1, justifyContent: 'flex-end'}}
-          device={device}
-          photo={true}
-          isActive={true}
-        />
-        <TouchableOpacity
-          onPress={() => {
-            takePicture();
-          }}
-          style={{
-            padding: 8,
-            backgroundColor: 'white',
-            width: 150,
-            marginBottom: 24,
-            alignSelf: 'center',
-          }}>
-          <Text style={{textAlign: 'center'}}>Capture</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+    <View style={{flex: 1}}>
+      <Camera
+        ref={camera}
+        style={{flex: 1, justifyContent: 'flex-end'}}
+        device={device}
+        photo={true}
+        isActive={true}
+      />
+      {renderButton({takePicture})}
+    </View>
   );
 };

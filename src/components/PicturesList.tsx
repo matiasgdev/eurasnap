@@ -12,7 +12,6 @@ import {Paragraph, XStack, Image} from 'tamagui';
 import {useStore} from '../store/PhotoStore';
 import {EmptyState} from './EmptyState';
 import {Skeletons} from './SkeletonCard';
-import {TakePictureButton} from './TakePictureButton';
 import {PhotoRecord} from '../store/type';
 
 export const PicturesList = () => {
@@ -39,8 +38,7 @@ export const PicturesList = () => {
           numColumns={2}
           data={pictures}
           renderItem={({item}) => <PictureCard {...item} />}
-          keyExtractor={item => item.key}
-          ListFooterComponent={<TakePictureButton />}
+          keyExtractor={({id}) => id}
           refreshing={status === 'refetching'}
         />
       ) : (
@@ -51,38 +49,32 @@ export const PicturesList = () => {
 };
 
 function PictureCard(photo: PhotoRecord) {
-  const {key, location, uri} = photo;
+  const {id, location, uri} = photo;
 
   return (
     <XStack style={{position: 'relative'}}>
       <Animated.View
         entering={FadeInUp}
         style={styles.card}
-        sharedTransitionTag={`card-${key}`}>
+        sharedTransitionTag={`card-${id}`}>
         <Image
           flexGrow={1}
           marginVertical={12}
-          height={100}
-          width={150}
-          resizeMode="center"
+          height={180}
+          width={180}
+          resizeMode="contain"
           source={{uri}}
         />
         <XStack
-          width={160}
-          flex={1}
-          alignItems="flex-end"
-          justifyContent="space-between"
-          paddingHorizontal={16}
-          marginTop={8}>
-          <XStack
-            paddingHorizontal={8}
-            paddingVertical={2}
-            borderRadius={12}
-            columnGap={4}
-            alignItems="center"
-            backgroundColor={lightColors.orange8}>
-            <Paragraph fontSize={12}>{location}</Paragraph>
-          </XStack>
+          position="absolute"
+          bottom={4}
+          right={4}
+          paddingHorizontal={8}
+          paddingVertical={2}
+          borderRadius={12}
+          alignItems="center"
+          backgroundColor={lightColors.orange8}>
+          <Paragraph fontSize={12}>{location}</Paragraph>
         </XStack>
       </Animated.View>
     </XStack>
@@ -98,9 +90,6 @@ const styles = StyleSheet.create({
   card: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 160,
-    paddingTop: 16,
-    paddingBottom: 8,
     margin: 8,
     marginBottom: 12,
     borderWidth: 0.5,
