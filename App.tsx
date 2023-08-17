@@ -10,7 +10,7 @@ import {TakePictureScreen} from './src/screens/TakePictureScreen';
 
 import tamaguiCfg from './tamagui.config';
 import 'react-native-gesture-handler';
-import {PictureDetailsScreen} from './src/screens/PictureDetailsScrene';
+import {PictureDetailsScreen} from './src/screens/PictureDetailsScreen';
 
 const Stack = createNativeStackNavigator();
 
