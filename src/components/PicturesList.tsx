@@ -13,6 +13,8 @@ import {useStore} from '../store/PhotoStore';
 import {EmptyState} from './EmptyState';
 import {Skeletons} from './SkeletonCard';
 import {PhotoRecord} from '../store/type';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native';
 
 export const PicturesList = () => {
   const {pictures, status, error} = useStore();
@@ -50,6 +52,7 @@ export const PicturesList = () => {
 
 function PictureCard(photo: PhotoRecord) {
   const {id, location, uri} = photo;
+  const {navigate} = useNavigation();
 
   return (
     <XStack style={{position: 'relative'}}>
@@ -57,27 +60,32 @@ function PictureCard(photo: PhotoRecord) {
         entering={FadeInUp}
         style={styles.card}
         sharedTransitionTag={`card-${id}`}>
-        <Image
-          flexGrow={1}
-          height={200}
-          width={180}
-          resizeMode="contain"
-          source={{uri}}
-        />
-        <XStack
-          position="absolute"
-          bottom={4}
-          right={4}
-          paddingHorizontal={8}
-          paddingVertical={2}
-          borderRadius={12}
-          maxWidth={140}
-          alignItems="center"
-          backgroundColor={lightColors.gray12}>
-          <Paragraph fontSize={12} numberOfLines={1}>
-            {location}
-          </Paragraph>
-        </XStack>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            navigate('PictureDetails', {id, location, uri});
+          }}>
+          <Image
+            flexGrow={1}
+            height={200}
+            width={180}
+            resizeMode="contain"
+            source={{uri}}
+          />
+          <XStack
+            position="absolute"
+            bottom={4}
+            right={4}
+            paddingHorizontal={8}
+            paddingVertical={2}
+            borderRadius={12}
+            maxWidth={140}
+            alignItems="center"
+            backgroundColor={lightColors.gray12}>
+            <Paragraph fontSize={12} numberOfLines={1}>
+              {location}
+            </Paragraph>
+          </XStack>
+        </TouchableWithoutFeedback>
       </Animated.View>
     </XStack>
   );
